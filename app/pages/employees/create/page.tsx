@@ -1,14 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { addEmployee } from "@/app/lib/employees";
+import {addEmployee} from "@/app/lib/employees";
 import EmployeeForm from "@/app/components/EmployeeForm";
-import { Employee } from "@/app/types/employee";
 
 export default function CreateEmployeePage() {
     const router = useRouter();
 
-    const handleSubmit = async (data: Omit<Employee, "id" | "created_at">) => {
+    const handleSubmit = async (data: any) => {
         try {
             await addEmployee(data);
             router.push("/pages/employees");

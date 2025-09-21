@@ -22,10 +22,7 @@ export interface Employee {
     schedule?: Record<string, ScheduleDay>;
     created_at: string;
 }
-export type EmployeeFormProps = {
-    defaultValues?: Partial<Employee>;
-    onSubmit: (data: Omit<Employee, "id" | "created_at">) => void;
-};
+
 export type Option = {
     value: string;
     label: string;

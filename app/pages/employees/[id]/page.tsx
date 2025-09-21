@@ -26,7 +26,7 @@ export default function EditEmployeePage() {
     }, [id]);
 
 
-    const handleUpdate = async (formData: Omit<Employee, "id" | "created_at">) => {
+    const handleUpdate = async (formData: Omit<Employee, "id">) => {
         if (!id) return;
 
         try {
@@ -37,7 +37,6 @@ export default function EditEmployeePage() {
             alert("Yangilashda xatolik");
         }
     };
-
 
     if (loading) return <p className="p-6">Yuklanmoqda...</p>;
     if (!employee) return <p className="p-6">Xodim topilmadi</p>;
