@@ -1,55 +1,44 @@
-import { Employee } from "@/app/types/employee"
-import {supabase} from "@/app/lib/storage";
+import { supabase } from "@/app/lib/storage";
+import { Employee } from "@/app/types/employee";
 
-export async function addEmployee(employee: Omit<Employee, "id" | "created_at">) {
+export const getEmployees = async (): Promise<Employee[]> => {
+    const { data, error } = await supabase.from("employees").select("*");
+    if (error) throw error;
+    return data as Employee[];
+};
+
+export const addEmployee = async (employee: Omit<Employee, "id">) => {
     const { data, error } = await supabase
         .from("employees")
         .insert(employee)
         .select()
-        .single()
+        .single();
+    if (error) throw error;
+    return data;
+};
 
-    if (error) throw error
-    return data
-}
-
-export async function getEmployees(): Promise<Employee[]> {
-    const { data, error } = await supabase
-        .from("employees")
-        .select("*")
-        .order("created_at", { ascending: false })
-
-    if (error) throw error
-    return data ?? []
-}
-
-export async function getEmployeeById(id: string): Promise<Employee | null> {
+export const getEmployeeById = async (id: string): Promise<Employee> => {
     const { data, error } = await supabase
         .from("employees")
         .select("*")
         .eq("id", id)
-        .single()
+        .single();
+    if (error) throw error;
+    return data as Employee;
+};
 
-    if (error) throw error
-    return data
-}
-
-export async function updateEmployee(id: string, employee: Omit<Employee, "id" | "created_at">) {
+export const updateEmployee = async (id: string, employee: Partial<Employee>) => {
     const { data, error } = await supabase
         .from("employees")
         .update(employee)
         .eq("id", id)
         .select()
-        .single()
+        .single();
+    if (error) throw error;
+    return data;
+};
 
-    if (error) throw error
-    return data
-}
-
-export async function deleteEmployee(id: string) {
-    const { error } = await supabase
-        .from("employees")
-        .delete()
-        .eq("id", id)
-
-    if (error) throw error
-}
+export const deleteEmployee = async (id: string) => {
+    const { error } = await supabase.from("employees").delete().eq("id", id);
+    if (error) throw error;
+};
