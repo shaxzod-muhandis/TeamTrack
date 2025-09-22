@@ -22,8 +22,3 @@ export interface Employee {
     schedule?: Record<string, ScheduleDay>;
     created_at: string;
 }
-
-export type Option = {
-    value: string;
-    label: string;
-};
